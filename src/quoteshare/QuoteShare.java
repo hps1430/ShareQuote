@@ -24,16 +24,16 @@ import java.io.FileNotFoundException;
  * @author harsh singh
  */
 public class QuoteShare {
-    private static Object Unirest;
-
+   
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws FileNotFoundException, UnirestException {
      
         
-        getquotes();
-        PostToFacebook();
+        getquotes();                            //Here we would get new qoutes on each call 
+       
+        PostToFacebook();                       // with the help of this function we can call facebook graph api using restfb to post our image on fb
         
         
         
@@ -43,24 +43,24 @@ public class QuoteShare {
     private static void PostToFacebook() throws FileNotFoundException {
 
         
-                String Access_Token = "EAABq3wMYTHABAD7LzpQY32RtVPDGHWQCoKtLvvygkSYwnr5NiBn34Lq5fPWGV0kxs8xnj5heAyfylMbJ2pxELm189ZBCDolgNz1xsFQpRtTtgXu8JkBEdKAfVj45VMObBTTOR2w2o3uGnHm7vmZCWoiZBMTWs1R4HZBr6lZBmsZBwFRWhdZBZCPuZBGXwMaEuqI8ZD";
+                String Access_Token = "EAABq3wMYTHABANGkgKZBAWPWD3lVUnX6aU3L8YfjkCd0q3bf8SgmTVqINZCytYTMZBiMwbyg5Jv7AK0fYytqfeQWAwM9VFXadub0dV8YO4ODWKp1CexVAV9JXc2fg1OOgTtxZBWST4AvSyCjjLM1vDY7FsvJQmZAVnVtOHTilLLlvWgJh4ZBPHfSaxIXEkeRwZD";
 
                 FacebookClient fbclient = new DefaultFacebookClient(Access_Token);
 
 
-                File file = new File("F:\\harsh.jpg");
+                File file = new File("F:\\quote.png");
 
                 FileInputStream fileInputStream = new FileInputStream(file);
-                FacebookType response = fbclient.publish("me/photos", FacebookType.class, BinaryAttachment.with("harsh.jpg", fileInputStream),
-                Parameter.with("message", "Here is today's Quote :) "));
+                FacebookType response = fbclient.publish("me/photos", FacebookType.class, BinaryAttachment.with("Quote.png", fileInputStream),
+                Parameter.with("message", "Here is today's Quote :) "));                //this would publish the image on facebook on my timeline
 
-                System.out.println("fb.com/"+response.getId());
+                System.out.println("fb.com/"+response.getId());                         //this would print the url of newly posted image on facebook
                 
                 
 
     }
 
-    private static void getquotes() throws UnirestException {
+    static String getquotes() throws UnirestException {
        
    
                 String URL = "https://andruxnet-random-famous-quotes.p.mashape.com/?cat=famous&count=1";
@@ -70,12 +70,38 @@ public class QuoteShare {
                 .header("X-Mashape-Key", "JNUFPIzOmEmsh7B9ZzUJy6wbguuCp1Kk6MTjsnat6zaeandSnc")
                 .header("Accept", "application/json")
                 .asJson();
-    
+                                                                                            //this would generate a json file containing 1 quote from mashape
                 
                 String fulljson = response.getBody().getObject().toString();
+ 
+                
+                String newquote = newquote(fulljson);                       //this will parse json data 
+           
+                
+                
+                new TextToImage(newquote);                                  //this helps in conversion of parsed data to image 
+                
+                return newquote;
     
-    
-    
+
+           
+        
+                
+                
+    }
+
+    private static String newquote(String fulljson) {
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        return null;
+        
     }
     
 }
