@@ -28,6 +28,7 @@ class TextToImage {
         String quote = newquote;
                System.out.println(newquote);
                
+               
         /*
            Because font metrics is based on a graphics context, we need to create
            a small, temporary image so we can ascertain the width and height
@@ -35,12 +36,12 @@ class TextToImage {
          */
         BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = img.createGraphics();
-        Font font = new Font("Arial", Font.PLAIN, 12);
+        Font font = new Font("Arial", Font.PLAIN, 25);
         g2d.setFont(font);
         FontMetrics fm = g2d.getFontMetrics();
         int width = fm.stringWidth(quote);
-        int height = fm.getHeight();
-        g2d.dispose();
+        int height =fm.getHeight()+50;                                                              //this will convert the text of quote to                                
+        g2d.dispose();                                                                            //image and that would be converted to image stored as a file
 
         img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         g2d = img.createGraphics();
@@ -54,7 +55,7 @@ class TextToImage {
         g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
         g2d.setFont(font);
         fm = g2d.getFontMetrics();
-        g2d.setColor(Color.BLACK);
+        g2d.setColor(Color.BLUE);
         g2d.drawString(quote, 0, fm.getAscent());
         g2d.dispose();
         try {
@@ -63,6 +64,11 @@ class TextToImage {
             ex.printStackTrace();
         }
 
+    }
+
+    
+    
+    
     }
 
   

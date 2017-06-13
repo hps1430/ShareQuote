@@ -30,10 +30,13 @@ public class QuoteShare {
      */
     public static void main(String[] args) throws FileNotFoundException, UnirestException {
      
+        String gen_quote="And they have no respect for the status quo. You can quote them, disagree with them, glorify or vilify them."; 
         
-        getquotes();                            //Here we would get new qoutes on each call 
+      //  String gen_quote = getquotes();                               //Here we would get new qoutes on each call 
        
-        PostToFacebook();                       // with the help of this function we can call facebook graph api using restfb to post our image on fb
+          new TextToImage(gen_quote);                                  //this helps in conversion of parsed data to image       
+        
+          PostToFacebook();                                           // with the help of this function we can call facebook graph api using restfb to post our image on fb
         
         
         
@@ -52,7 +55,7 @@ public class QuoteShare {
 
                 FileInputStream fileInputStream = new FileInputStream(file);
                 FacebookType response = fbclient.publish("me/photos", FacebookType.class, BinaryAttachment.with("Quote.png", fileInputStream),
-                Parameter.with("message", "Here is today's Quote :) "));                //this would publish the image on facebook on my timeline
+                Parameter.with("message", "Here is today's Quote :) "));                //this would publish the stored file image on facebook on my timeline
 
                 System.out.println("fb.com/"+response.getId());                         //this would print the url of newly posted image on facebook
                 
@@ -79,7 +82,7 @@ public class QuoteShare {
            
                 
                 
-                new TextToImage(newquote);                                  //this helps in conversion of parsed data to image 
+                 
                 
                 return newquote;
     
@@ -93,7 +96,7 @@ public class QuoteShare {
     private static String newquote(String fulljson) {
         
         
-        
+                
         
         
         
