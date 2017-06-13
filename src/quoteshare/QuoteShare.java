@@ -17,6 +17,8 @@ import com.restfb.types.FacebookType;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 /**
@@ -30,9 +32,9 @@ public class QuoteShare {
      */
     public static void main(String[] args) throws FileNotFoundException, UnirestException {
      
-        String gen_quote="And they have no respect for the status quo. You can quote them, disagree with them, glorify or vilify them."; 
         
-      //  String gen_quote = getquotes();                               //Here we would get new qoutes on each call 
+        
+          String gen_quote = getquotes();                               //Here we would get new qoutes on each call 
        
           new TextToImage(gen_quote);                                  //this helps in conversion of parsed data to image       
         
@@ -46,7 +48,7 @@ public class QuoteShare {
     private static void PostToFacebook() throws FileNotFoundException {
 
         
-                String Access_Token = "EAABq3wMYTHABANGkgKZBAWPWD3lVUnX6aU3L8YfjkCd0q3bf8SgmTVqINZCytYTMZBiMwbyg5Jv7AK0fYytqfeQWAwM9VFXadub0dV8YO4ODWKp1CexVAV9JXc2fg1OOgTtxZBWST4AvSyCjjLM1vDY7FsvJQmZAVnVtOHTilLLlvWgJh4ZBPHfSaxIXEkeRwZD";
+                String Access_Token = "EAABq3wMYTHABANCtnLuEZAiDQWxQXQBJHTMZCCcUPCsmwBQSXEAZAN7DekdE24ZAMEQgZCen1ZBz6z0r2Iq6AfAI1aZBlSmdhFBoFbfsrtQsGUMQeNP27UYRW6Pclf36YvkeERvD09FwSZA1ZCAxvCZC9gSAaJIT9I0uMJe95H39zkkfR2Ri99amdVNURdJ6KMcZCwZD";
 
                 FacebookClient fbclient = new DefaultFacebookClient(Access_Token);
 
@@ -95,15 +97,29 @@ public class QuoteShare {
 
     private static String newquote(String fulljson) {
         
+        String finalquote = null;
         
-                
-        
-        
-        
-        
-        
-        
-        return null;
+         try{
+
+            JSONObject responeJson = new JSONObject(fulljson);                              
+            if(responeJson.getString("success").equals("1")){                           //it throws different quote everytime using json parsing
+                JSONArray jsonArray = responeJson.getJSONArray("results");
+
+                for (int i=0;i<2;i++){
+                    
+                    System.out.println("Quote : "+jsonArray.getJSONObject(i).getString("quote"));
+                    
+                    finalquote =jsonArray.getJSONObject(i).getString("quote");
+            
+                    
+                }
+            }
+        }catch (Throwable e){
+            e.printStackTrace();
+        }
+          
+         
+            return finalquote;
         
     }
     

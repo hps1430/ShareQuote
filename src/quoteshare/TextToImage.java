@@ -28,21 +28,28 @@ class TextToImage {
         String quote = newquote;
                System.out.println(newquote);
                
+        quote = dividequote(quote);       
+ 
                
-        /*
-           Because font metrics is based on a graphics context, we need to create
-           a small, temporary image so we can ascertain the width and height
-           of the final image
-         */
+               
+       
+   //        Because font metrics is based on a graphics context, we need to create
+     //      a small, temporary image so we can ascertain the width and height
+       //    of the final image
+       
+        
         BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = img.createGraphics();
-        Font font = new Font("Arial", Font.PLAIN, 25);
+        Font font = new Font("Arial", Font.PLAIN, 48);
         g2d.setFont(font);
         FontMetrics fm = g2d.getFontMetrics();
         int width = fm.stringWidth(quote);
-        int height =fm.getHeight()+50;                                                              //this will convert the text of quote to                                
+        int height =fm.getHeight();                                                              //this will convert the text of quote to                                
         g2d.dispose();                                                                            //image and that would be converted to image stored as a file
 
+        System.out.println(width);
+        System.out.println(height);
+        
         img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         g2d = img.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
@@ -66,6 +73,26 @@ class TextToImage {
 
     }
 
+    private String dividequote(String quote) {
+    
+        
+            String str = quote;
+        
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < str.length(); i++) {
+            if (i > 0 && (i % 15 == 0)) {
+            sb.append(" \n");
+            System.lineSeparator();
+            }
+
+            sb.append(str.charAt(i));
+            }
+
+            str = sb.toString();
+
+    
+              
+            return str;
     
     
     
